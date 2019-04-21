@@ -99,7 +99,7 @@ def generate_keylist():
             keylist.append(keymap[binding])
         except KeyError as e:
             errors.append(e)
-
+    
     if (len(errors) > 0):
         print 'The %s keys in your retroarch.cfg are unsupported\
                 by this script\n' % ', '.join(map(str, errors))
@@ -119,13 +119,13 @@ def get_key_bindings(ra_cfg):
     with open(ra_cfg, 'r') as fp:
         for line in fp:
             if 'input_player1_' in line and '#' not in line and\
-                    '_analog_dpad_mode' not in line:
+                    '_analog_dpad_mode' not in line and\
+                    '_joypad_index' not in line:
                 keys.append(line.split('=')[1][2:-2])
     return keys
 
 
 def register_device(keylist):
-
     return uinput.Device(keylist)
 
 
@@ -140,10 +140,9 @@ def press_keys(line, device, keylist):
     # presses on the remote control used for development
 
     if "released" in line:
-
         # Select
         if "rewind" in line or "yellow" in line:
-            device.emit_click(keylist[5])
+            device.emit_click(uinput.KEY_1)
 
         # Start
         elif "Fast forward" in line or "blue" in line:
@@ -151,19 +150,19 @@ def press_keys(line, device, keylist):
 
         # Left on DPAD
         elif "left" in line:
-            device.emit_click(keylist[8])
+            device.emit_click(uinput.KEY_LEFT)
 
         # Right on DPAD
         elif "right" in line:
-            device.emit_click(keylist[9])
+            device.emit_click(uinput.KEY_RIGHT)
 
         # Up on DPAD
         elif "up" in line:
-            device.emit_click(keylist[10])
+            device.emit_click(uinput.KEY_UP)
 
         # Down on DPAD
         elif "down" in line:
-            device.emit_click(keylist[11])
+            device.emit_click(uinput.KEY_DOWN)
 
         # A Button
         elif "select" in line or "red" in line:
@@ -174,7 +173,7 @@ def press_keys(line, device, keylist):
             device.emit_click(keylist[1])
 
         # Uncomment the prinnt statement below to display remote output
-        # print line
+        print line
 
 
 def main():
