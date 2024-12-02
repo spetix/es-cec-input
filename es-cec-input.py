@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 """
 Name: es-cec-input.py
@@ -101,10 +101,10 @@ def generate_keylist():
             errors.append(e)
     
     if (len(errors) > 0):
-        print 'The %s keys in your retroarch.cfg are unsupported\
-                by this script\n' % ', '.join(map(str, errors))
-        print 'Supported keys are:\n'
-        print get_keymap().keys()
+        print( 'The %s keys in your retroarch.cfg are unsupported\
+                by this script\n' % ', '.join(map(str, errors)))
+        print ('Supported keys are:\n')
+        print (get_keymap().keys())
         sys.exit()
 
     return keylist
@@ -173,7 +173,7 @@ def press_keys(line, device, keylist):
             device.emit_click(keylist[1])
 
         # Uncomment the prinnt statement below to display remote output
-        print line
+        print (line)
 
 
 def main():
